@@ -1,28 +1,29 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flasgger import Swagger
+from flask_jwt_extended import JWTManager  # 🔐 Importa JWT
 from config import Config
 
 db = SQLAlchemy()
+jwt = JWTManager()  # 🔐 Instância JWT
 
 def create_app():
     app = Flask(__name__)
 
     # Configurações
-    app.config.from_object('config.Config')
+    app.config.from_object(Config)
 
     # Banco de dados
     db.init_app(app)
 
-    # Swagger
-    Swagger(app)  # ou com config customizado (opcional, posso te mostrar)
+    # JWT
+    jwt.init_app(app)  # 🔐 Inicializa JWT com o app
 
-    # Importa e registra as rotas
+    # Swagger
+    Swagger(app)
+
+    # Rotas
     from app.routes.auth_routes import auth_bp
     app.register_blueprint(auth_bp, url_prefix="/auth")
-
-    # Se tiver outras rotas, registre aqui no futuro
-    # from app.routes.scraping_routes import scraping_bp
-    # app.register_blueprint(scraping_bp, url_prefix="/scraping")
 
     return app

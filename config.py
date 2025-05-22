@@ -8,8 +8,11 @@ class Config:
         'title': 'API Vitivinicultura',
         'uiversion': 3
     }
-    
+
     # Configurações de segurança e banco de dados
-    SECRET_KEY = 'sua-chave-secreta-aqui'  # Recomendo usar uma chave mais complexa em produção
+    SECRET_KEY = 'sua-chave-secreta-aqui'  # Use algo mais forte em produção
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(basedir, 'app.db')}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # 🔐 Configuração do JWT
+    JWT_SECRET_KEY = 'sua-jwt-secret-key-aqui'  # Chave usada para assinar tokens
